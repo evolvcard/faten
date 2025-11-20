@@ -9,10 +9,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-color: #ffffff; /* page background white */
-      --card-bg: rgba(0,43,92,0.05); /* subtle card background */
+      --bg-color: #ffffff;
+      --card-bg: rgba(0,43,92,0.05);
       --accent: #0f1724;
-      --muted: #002b5c; /* dark text color */
+      --muted: #002b5c;
       --radius: 16px;
       --shadow: 0 8px 30px rgba(0,0,0,0.1);
     }
@@ -70,8 +70,18 @@
       gap: 6px;
     }
 
-    .meta { margin-top: 14px; display: grid; gap: 8px; }
-    .meta .row { display: flex; gap: 10px; align-items: center; justify-content: center; }
+    /* Meta/contact details left-aligned */
+    .meta {
+      margin-top: 14px;
+      display: grid;
+      gap: 8px;
+      text-align: left; /* left-align content */
+    }
+    .meta .row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
     .meta .label { min-width: 28px; font-size: 13px; }
     .meta .value { font-size: 14px; word-break: break-word; }
 
