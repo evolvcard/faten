@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Contact — Digital Card</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #ffffff; /* page background white */
+      --card-bg: rgba(0,43,92,0.05); /* subtle card background */
+      --accent: #0f1724;
+      --muted: #002b5c; /* dark text color */
+      --radius: 16px;
+      --shadow: 0 8px 30px rgba(0,0,0,0.1);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background-color: var(--bg-color);
+      color: var(--muted);
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    /* Logo at the top */
+    .logo img {
+      width: 120px;
+      max-width: 80%;
+      height: auto;
+      margin-bottom: 16px;
+    }
+
+    .info { margin-bottom: 14px; }
+
+    .name { font-weight: 700; font-size: 20px; margin: 0; color: var(--muted); }
+    .title { font-size: 14px; margin-top: 4px; opacity: 0.85; }
+    .company { margin-top: 6px; font-size: 13px; opacity: 0.85; }
+
+    .actions { display: flex; gap: 8px; margin: 14px 0; justify-content: center; }
+    .btn {
+      flex: 1;
+      padding: 11px;
+      border-radius: 12px;
+      background: rgba(0,43,92,0.1);
+      border: 1px solid rgba(0,43,92,0.15);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .meta { margin-top: 14px; display: grid; gap: 8px; }
+    .meta .row { display: flex; gap: 10px; align-items: center; justify-content: center; }
+    .meta .label { min-width: 28px; font-size: 13px; }
+    .meta .value { font-size: 14px; word-break: break-word; }
+
+    .footer { margin-top: 16px; text-align: center; }
+    .small { font-size: 12px; opacity: 0.8; }
+
+    @media(min-width:700px){
+      .card { max-width: 520px; }
+    }
+
+    .btn:focus { outline: 3px solid rgba(0,43,92,0.3); }
+  </style>
+</head>
+<body>
+  <main class="card" role="main" aria-label="Digital contact card">
+
+    <!-- Logo at the top -->
+    <div class="logo">
+      <img src="assets/Capp.png" alt="CAPP Logo">
+    </div>
+
+    <div class="info">
+      <h1 class="name" id="personName">Ms.Faten Almedbal</h1>
+      <div class="title" id="personTitle">Business Unit Manager</div>
+      <div class="company" id="companyName">CAPP KSA</div>
+    </div>
+
+    <div class="actions">
+      <a id="callBtn" class="btn" href="tel:+966506219025" aria-label="Call"><span>📞 Call</span></a>
+      <a id="emailBtn" class="btn" href="mailto:F.m@capp-ksa.com" aria-label="Email"><span>✉️ Email</span></a>
+    </div>
+
+    <div class="meta" aria-label="Contact details">
+      <div class="row"><div class="label">📧</div><div class="value" id="emailVal">F.m@capp-ksa.com</div></div>
+      <div class="row"><div class="label">📞</div><div class="value" id="phoneVal">+966506219025</div></div>
+      <div class="row"><div class="label">🏢</div><div class="value" id="addressVal">Al Imam Ali Ibn Taleb, Al Malaz, Riyadh, Saudi Arabia</div></div>
+      <div class="row"><div class="label">🔗</div><div class="value" id="websiteVal">capp-ksa.com</div></div>
+    </div>
+
+    <div class="footer">
+      <a id="downloadBtn" class="btn" role="button" href="#" aria-label="Download vCard">💾 Download vCard</a>
+      <div class="small">Tap call or email buttons to contact directly</div>
+    </div>
+  </main>
+
+  <script>
+    const CONTACT = {
+      name: 'Ms.Faten Almedbal',
+      title: 'Business Unit Manager',
+      company: 'CAPP KSA',
+      phone: '+966506219025',
+      email: 'F.m@capp-ksa.com',
+      address: 'Al Imam Ali Ibn Taleb, Al Malaz, Riyadh, Saudi Arabia',
+      website: 'capp-ksa.com',
+    };
+
+    // Populate fields
+    document.getElementById('personName').textContent = CONTACT.name;
+    document.getElementById('personTitle').textContent = CONTACT.title;
+    document.getElementById('companyName').textContent = CONTACT.company;
+    document.getElementById('phoneVal').textContent = CONTACT.phone;
+    document.getElementById('emailVal').textContent = CONTACT.email;
+    document.getElementById('addressVal').textContent = CONTACT.address;
+    document.getElementById('websiteVal').textContent = CONTACT.website;
+
+    document.getElementById('callBtn').href = `tel:${CONTACT.phone.replace(/\s+/g,'')}`;
+    document.getElementById('emailBtn').href = `mailto:${CONTACT.email}`;
+
+    // vCard generator
+    function makeVCard(c){
+      const lines = [
+        'BEGIN:VCARD',
+        'VERSION:3.0',
+        `FN:${c.name}`,
+        `TITLE:${c.title}`,
+        `ORG:${c.company}`,
+        `TEL;TYPE=CELL:${c.phone}`,
+        `EMAIL;TYPE=WORK:${c.email}`,
+        `ADR;TYPE=WORK:;;${c.address.replace(/\n/g,';')}`,
+        `URL:${c.website}`,
+        'END:VCARD'
+      ];
+      return lines.join('\r\n');
+    }
+
+    function downloadVCard(){
+      const v = makeVCard(CONTACT);
+      const blob = new Blob([v], {type:'text/vcard;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${CONTACT.name.replace(/[^a-z0-9]/gi,'_')}.vcf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('downloadBtn').addEventListener('click', function(e){
+      e.preventDefault();
+      downloadVCard();
+    });
+  </script>
+</body>
+</html>
